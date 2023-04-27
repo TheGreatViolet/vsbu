@@ -1,4 +1,6 @@
 <script lang="ts">
+	import Divider from '../../../components/Divider.svelte';
+
 	let getProbAfterNData: {
 		runs: number;
 		maxRuns: number;
@@ -25,32 +27,51 @@
 	};
 </script>
 
-<h1>RNG meter utilities</h1>
+<div class="h-full flex-col">
+	<h1 class="text-5xl">RNG meter utilities</h1>
 
-<form method="POST" on:submit|preventDefault={getProbAfterN}>
-	<h2>Get probability after N runs</h2>
+	<Divider />
 
-	<label>
-		Runs
-		<input type="number" name="runs" bind:value={getProbAfterNData.runs} />
-	</label>
+	<form
+		method="POST"
+		on:submit|preventDefault={getProbAfterN}
+		class="flex-col inline-flex space-y-4"
+	>
+		<h2 class="text-3xl">Get probability after N runs</h2>
 
-	<label>
-		Max Runs
-		<input type="number" name="maxRuns" bind:value={getProbAfterNData.maxRuns} />
-	</label>
+		<label>
+			Runs
+			<input class="form-item" type="number" name="runs" bind:value={getProbAfterNData.runs} />
+		</label>
 
-	<label>
-		Starting % (as a decimal)
-		<input name="startPercent" bind:value={getProbAfterNData.startPercent} />
-	</label>
+		<label>
+			Max Runs
+			<input
+				class="form-item"
+				type="number"
+				name="maxRuns"
+				bind:value={getProbAfterNData.maxRuns}
+			/>
+		</label>
 
-	<button type="submit">Submit</button>
-	<br />
-	{#if getProbAfterNData.result !== null}
-		<p>
-			Result: {getProbAfterNData.result.toFixed(6)} or
-			{(getProbAfterNData.result * 100).toFixed(3)}%
-		</p>
-	{/if}
-</form>
+		<label>
+			Starting % (as a decimal)
+			<input
+				class="form-item"
+				type="text"
+				name="startPercent"
+				bind:value={getProbAfterNData.startPercent}
+			/>
+		</label>
+
+		<button type="submit" class="w-40 ring-1 ring-zinc-500 ring-inset rounded-md p-1">Submit</button
+		>
+
+		{#if getProbAfterNData.result !== null}
+			<p>
+				Result: {getProbAfterNData.result.toFixed(6)} or
+				{(getProbAfterNData.result * 100).toFixed(3)}%
+			</p>
+		{/if}
+	</form>
+</div>

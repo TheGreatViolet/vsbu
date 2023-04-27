@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number'] {
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance: textfield !important;
+  }
+}
+
+.form-item {
+  @apply block bg-zinc-900 ring-1 ring-zinc-800 ring-inset rounded-md p-1
+  placeholder:text-zinc-900 focus:ring-2 focus:ring-inset focus:ring-indigo-950;
+}
