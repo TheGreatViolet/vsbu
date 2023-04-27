@@ -9,7 +9,7 @@
 		border-b outline-offset-1 border-zinc-800
 		flex justify-start space-x-6 items-center p-4"
 	>
-		<h1 class="font-bold text-xl">VSBU</h1>
+		<a href="/" class="font-bold text-xl">VSBU</a>
 
 		<Dropdown
 			title="Utilities"
