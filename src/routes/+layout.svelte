@@ -22,7 +22,7 @@
 		/>
 	</nav>
 
-	<main class="p-4">
+	<main class="p-4 overflow-y-auto">
 		<slot />
 	</main>
 </body>

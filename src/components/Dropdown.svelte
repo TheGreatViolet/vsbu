@@ -56,7 +56,10 @@
 						class="block px-4 py-2 text-sm"
 						role="menuitem"
 						tabindex="-1"
-						id="menu-item-0">{item.text}</a
+						id="menu-item-0"
+						on:click={() => {
+							menuOpen = false;
+						}}>{item.text}</a
 					>
 				{/each}
 			</div>
