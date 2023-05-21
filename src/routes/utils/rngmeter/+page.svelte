@@ -1,15 +1,18 @@
 <script lang="ts">
 	import Divider from '../../../components/Divider.svelte';
+	import Dropdown from '../../../components/Dropdown.svelte';
 
 	let getProbAfterNData: {
 		runs: number;
 		maxRuns: number;
 		startPercent: number;
+		magicFind: number;
 		result: number | null;
 	} = {
 		runs: 0,
 		maxRuns: 0,
 		startPercent: 0,
+		magicFind: 0,
 		result: null
 	};
 
@@ -64,8 +67,25 @@
 			/>
 		</label>
 
-		<button type="submit" class="w-40 ring-1 ring-zinc-500 ring-inset rounded-md p-1">Submit</button
-		>
+		<div class="-translate-x-2">
+			<Dropdown title="Slayer" align="start" size="lg" hover={false}>
+				<div class="pl-4 pb-4">
+					<label>
+						Magic Find (leave 0 if not doing slayer)
+						<input
+							class="form-item"
+							type="number"
+							name="magicFind"
+							bind:value={getProbAfterNData.magicFind}
+						/>
+					</label>
+				</div>
+			</Dropdown>
+		</div>
+
+		<button type="submit" class="w-40 ring-1 ring-zinc-500 ring-inset rounded-md p-1">
+			Submit
+		</button>
 
 		{#if getProbAfterNData.result !== null}
 			<p>

@@ -1,7 +1,7 @@
 export async function POST({ request }) {
-  const { runs, maxRuns, startPercent } = await request.json();
+  const { runs, maxRuns, startPercent, magicFind } = await request.json();
 
-  const finalPercent = _getPercent(runs, maxRuns, startPercent);
+  const finalPercent = _getPercent(runs, maxRuns, startPercent, magicFind);
 
   return new Response(JSON.stringify({ percent: finalPercent }), {
     headers: {
@@ -10,15 +10,19 @@ export async function POST({ request }) {
   });
 }
 
-export function _calcRNGMeterPercent(runs: number, maxRuns: number, startPercent: number) {
+export function _calcRNGMeterPercent(runs: number, maxRuns: number, startPercent: number, magicFind: number) {
   if (runs > maxRuns) throw new RangeError('runs cannot be greater than maxRuns');
 
   if (runs === maxRuns) return 1;
 
-  return startPercent * (1 + ((600 * (runs / maxRuns)) / 100));
+  const meterAdjusted = startPercent * (1 + ((600 * (runs / maxRuns)) / 100));
+
+  if (magicFind === 0) return meterAdjusted;
+
+  return meterAdjusted * (1 + (magicFind / 100));
 }
 
-export function _getPercent(runs: number, maxRuns: number, startPercent: number) {
+export function _getPercent(runs: number, maxRuns: number, startPercent: number, magicFind: number) {
   /*
   Math Breakdown:
 
@@ -41,7 +45,7 @@ export function _getPercent(runs: number, maxRuns: number, startPercent: number)
   let avgPercent;
 
   for (let i = 0; i < runs; i++) {
-    const oddsAtN = _calcRNGMeterPercent(i, maxRuns, startPercent);
+    const oddsAtN = _calcRNGMeterPercent(i, maxRuns, startPercent, magicFind);
 
     avgPercent = avgPercent ? avgPercent + oddsAtN : oddsAtN;
   }

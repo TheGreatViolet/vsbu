@@ -3,10 +3,13 @@
 
 	type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 	type Style = 'backgrounded' | 'none';
+	type Alignment = 'start' | 'center' | 'end';
 
 	export let title: string;
 	export let size: Size = 'md';
 	export let style: Style = 'none';
+	export let align: Alignment = 'center';
+	export let hover: boolean = true;
 
 	let menuOpen = false;
 </script>
@@ -14,9 +17,9 @@
 <div class="relative inline-block text-left {style == 'none' ? 'w-full' : ''}">
 	<button
 		type="button"
-		class="inline-flex w-full align-middle items-center justify-center gap-x-1.5 rounded-md
+		class="inline-flex w-full align-{align} items-{align} justify-{align} gap-x-1.5 rounded-md
     bg-zinc-900 px-3 py-2 text-sm font-semibold text-zinc-300
-    shadow-sm hover:bg-zinc-800
+    shadow-sm {hover ? 'hover:bg-zinc-800' : ''}
     ease-in-out duration-150"
 		id="menu-button"
 		aria-expanded="true"
