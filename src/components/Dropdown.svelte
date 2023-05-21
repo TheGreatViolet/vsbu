@@ -1,21 +1,20 @@
 <script lang="ts">
 	import { scale } from 'svelte/transition';
 
-	type DropdownItem = {
-		text: string;
-		href: string;
-	};
+	type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+	type Style = 'backgrounded' | 'none';
 
 	export let title: string;
-	export let items: DropdownItem[];
+	export let size: Size = 'md';
+	export let style: Style = 'none';
 
 	let menuOpen = false;
 </script>
 
-<div class="relative inline-block text-left">
+<div class="relative inline-block text-left {style == 'none' ? 'w-full' : ''}">
 	<button
 		type="button"
-		class="inline-flex w-full justify-center gap-x-1.5 rounded-md
+		class="inline-flex w-full align-middle items-center justify-center gap-x-1.5 rounded-md
     bg-zinc-900 px-3 py-2 text-sm font-semibold text-zinc-300
     shadow-sm hover:bg-zinc-800
     ease-in-out duration-150"
@@ -24,7 +23,7 @@
 		aria-haspopup="true"
 		on:click={() => (menuOpen = !menuOpen)}
 	>
-		{title}
+		<p class="text-{size}">{title}</p>
 		<svg
 			class="-mr-1 h-5 w-5 text-gray-400"
 			viewBox="0 0 20 20"
@@ -40,29 +39,29 @@
 	</button>
 
 	{#if menuOpen}
-		<div
-			class="absolute left-0 z-10 mt-2 w-56 origin-top-left rounded-md
-        bg-zinc-800 shadow-lg ring-1 ring-zinc-700 ring-opacity-5 focus:outline-none opacity-100"
-			role="menu"
-			aria-orientation="vertical"
-			aria-labelledby="menu-button"
-			tabindex="-1"
-			transition:scale={{ duration: 150 }}
-		>
-			<div class="py-1" role="none">
-				{#each items as item}
-					<a
-						href={item.href}
-						class="block px-4 py-2 text-sm"
-						role="menuitem"
-						tabindex="-1"
-						id="menu-item-0"
-						on:click={() => {
-							menuOpen = false;
-						}}>{item.text}</a
-					>
-				{/each}
+		{#if style === 'backgrounded'}
+			<div
+				class="absolute left-0 z-10 mt-2 w-fit whitespace-nowrap origin-top-left rounded-md
+	        bg-zinc-800 shadow-lg ring-1 ring-zinc-700 ring-opacity-5 focus:outline-none opacity-100"
+				role="menu"
+				aria-orientation="vertical"
+				aria-labelledby="menu-button"
+				tabindex="-1"
+				transition:scale={{ duration: 150 }}
+			>
+				<slot />
 			</div>
-		</div>
+		{:else if style === 'none'}
+			<div
+				class="left-0 mt-2 w-full h-fit whitespace-nowrap"
+				role="menu"
+				aria-orientation="vertical"
+				aria-labelledby="menu-button"
+				tabindex="-1"
+				transition:scale={{ duration: 150 }}
+			>
+				<slot />
+			</div>
+		{/if}
 	{/if}
 </div>
